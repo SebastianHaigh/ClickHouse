@@ -679,6 +679,9 @@ BlockIO InterpreterSystemQuery::execute()
         case Type::START_REPLICATION_QUEUES:
             startStopAction(ActionLocks::ReplicationQueue, true);
             break;
+        case Type::STOP_RELOAD_DICTIONARIES:
+            // Not implemented
+            break;
         case Type::STOP_DISTRIBUTED_SENDS:
             startStopAction(ActionLocks::DistributedSend, false);
             break;
@@ -1565,6 +1568,11 @@ AccessRightsElements InterpreterSystemQuery::getRequiredAccessForDDLOnCluster() 
                 required_access.emplace_back(AccessType::SYSTEM_REPLICATION_QUEUES);
             else
                 required_access.emplace_back(AccessType::SYSTEM_REPLICATION_QUEUES, query.getDatabase(), query.getTable());
+            break;
+        }
+        case Type::STOP_RELOAD_DICTIONARIES:
+        {
+            // Not implemented
             break;
         }
         case Type::REFRESH_VIEW:
